@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 969930994}
   - component: {fileID: 969930993}
   - component: {fileID: 969930990}
+  - component: {fileID: 969930995}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -363,6 +364,7 @@ MonoBehaviour:
   _wallslideLayer:
     serializedVersion: 2
     m_Bits: 8
+  _showDebugGizmos: 0
 --- !u!212 &969930991
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -475,6 +477,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &969930995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969930989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2e7a01d1b7d7d4c823ebb71d81d5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 8067570291098056209, guid: e325050c19d82794d9e7c06fc89361ed, type: 3}
+  spawnPoint: {x: 0, y: 0.4}
+  cooldown: 0.2
 --- !u!1 &1352419085
 GameObject:
   m_ObjectHideFlags: 0
