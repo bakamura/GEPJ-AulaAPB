@@ -348,6 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7516feeac66adfe4b9097eabfed56ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputRememberTime: 0.15
   _movementLeftKey: 97
   _movementRightKey: 100
   _movementSpeed: 3
@@ -364,7 +365,8 @@ MonoBehaviour:
   _wallslideLayer:
     serializedVersion: 2
     m_Bits: 8
-  _showDebugGizmos: 0
+  _wallJumpRegainControlTime: 0.35
+  _showDebugGizmos: 1
 --- !u!212 &969930991
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -476,7 +478,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &969930995
 MonoBehaviour:
   m_ObjectHideFlags: 0

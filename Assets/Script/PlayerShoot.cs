@@ -1,31 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShoot : MonoBehaviour
-{
-    public GameObject prefab;
-    public Vector2 spawnPoint;
+public class PlayerShoot : MonoBehaviour {
 
-    float cooldownCurrent;
-    public float cooldown;
+    [Header("Input")]
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float _inputRememberTime;
 
-    // Update is called once per frame
-    void Update()
-    {
-        cooldownCurrent -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Mouse0)) {
-            if (cooldownCurrent < 0) {
-                cooldownCurrent = cooldown;
-                GameObject shot = Instantiate(prefab, (Vector2)transform.position + spawnPoint, new Quaternion(0, 0, 0, 0));
-                shot.GetComponent<Rigidbody2D>().velocity = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - ((Vector2) transform.position + spawnPoint)).normalized * 6.66f;
-            }
+    [Header("Shoot")]
+
+    [SerializeField] private KeyCode _shootKey;
+    private float _shootInput;
+    [SerializeField] private GameObject _shootPrefab;
+    [SerializeField] private Vector2 _shootSpawnOffset;
+    [SerializeField] private float _shootCooldown;
+    private float _shootCooldownCurrent;
+
+    private void Update() {
+        DecreaseInputTimer();
+        GetInput();
+        DecreaseCooldownTimer();
+        if (_shootInput > 0) {
+            _shootInput = 0;
+            Shoot();
         }
     }
+
+    private void DecreaseInputTimer() {
+        if (_shootInput > 0) _shootInput -= Time.deltaTime;
+    }
+
+    private void GetInput() {
+        if (Input.GetKeyDown(_shootKey)) _shootInput = _inputRememberTime;
+    }
+
+    private void Shoot() {
+        if (_shootCooldownCurrent < 0) {
+            _shootCooldownCurrent = _shootCooldown;
+            GameObject shot = Instantiate(_shootPrefab, (Vector2)transform.position + _shootSpawnOffset, new Quaternion(0, 0, 0, 0));
+            shot.GetComponent<Rigidbody2D>().velocity = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - ((Vector2)transform.position + _shootSpawnOffset)).normalized * 6.66f;
+        }
+    }
+
+    private void DecreaseCooldownTimer() {
+        if (_shootInput > 0) _shootCooldownCurrent -= Time.deltaTime;
+    }
+
 }
