@@ -50,9 +50,15 @@ public class PlayerMovement : MonoBehaviour {
 
     private Vector2 _velocityCache;
     private WaitForSeconds _wallJumpRegainControlWait;
+    private Collider2D _col;
+
+    // Access
+
+    public Collider2D Collider { get { return _col; } }
 
     private void Awake() {
         _rb = GetComponent<Rigidbody2D>();
+        _col = GetComponent<Collider2D>();
         _wallJumpRegainControlWait = new WaitForSeconds(_wallJumpRegainControlTime);
 
         _walljumpVector = _walljumpVector.normalized;
@@ -62,8 +68,10 @@ public class PlayerMovement : MonoBehaviour {
         DecreseInputTimer();
         GetInput();
         if (_canMove) {
+            _velocityCache = _rb.velocity;
             Jump();
             WallJump();
+            _rb.velocity = _velocityCache;
         }
     }
 

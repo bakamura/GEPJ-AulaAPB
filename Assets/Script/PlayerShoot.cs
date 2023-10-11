@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour {
@@ -15,9 +16,16 @@ public class PlayerShoot : MonoBehaviour {
     [SerializeField] private float _shootCooldown;
     private float _shootCooldownCurrent;
 
+    private List<Bullet> _shootInstances = new List<Bullet>();
+
+    [Header("Cache")]
+
+    private bool _hasShootCache;
+
     private void Update() {
         DecreaseInputTimer();
         GetInput();
+
         DecreaseCooldownTimer();
         if (_shootInput > 0) {
             _shootInput = 0;
@@ -34,15 +42,28 @@ public class PlayerShoot : MonoBehaviour {
     }
 
     private void Shoot() {
-        if (_shootCooldownCurrent < 0) {
+        if (_shootCooldownCurrent <= 0) {
             _shootCooldownCurrent = _shootCooldown;
-            GameObject shot = Instantiate(_shootPrefab, (Vector2)transform.position + _shootSpawnOffset, new Quaternion(0, 0, 0, 0));
-            shot.GetComponent<Rigidbody2D>().velocity = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - ((Vector2)transform.position + _shootSpawnOffset)).normalized * 6.66f;
+
+            _hasShootCache = false;
+            if (_shootInstances.Count > 0) {
+                foreach (Bullet bullet in _shootInstances) {
+                    if (!bullet.IsActive) {
+                        bullet.Shoot(transform.position + (Vector3)_shootSpawnOffset, (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - ((Vector2)transform.position + _shootSpawnOffset));
+                        _hasShootCache = true;
+                        break;
+                    }
+                }
+            }
+            if (!_hasShootCache) {
+                _shootInstances.Add(Instantiate(_shootPrefab, (Vector2)transform.position + _shootSpawnOffset, new Quaternion(0, 0, 0, 0)).GetComponent<Bullet>());
+                _shootInstances[_shootInstances.Count - 1].Shoot(transform.position + (Vector3)_shootSpawnOffset, (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - ((Vector2)transform.position + _shootSpawnOffset));
+            }
         }
     }
 
     private void DecreaseCooldownTimer() {
-        if (_shootInput > 0) _shootCooldownCurrent -= Time.deltaTime;
+        if (_shootCooldownCurrent > 0) _shootCooldownCurrent -= Time.deltaTime;
     }
 
 }

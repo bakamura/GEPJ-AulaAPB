@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 345916016}
   m_Layer: 3
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -365,6 +365,7 @@ MonoBehaviour:
   _wallslideLayer:
     serializedVersion: 2
     m_Bits: 8
+  _walljumpVector: {x: 0, y: 0}
   _wallJumpRegainControlTime: 0.35
   _showDebugGizmos: 1
 --- !u!212 &969930991
@@ -491,9 +492,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d2e7a01d1b7d7d4c823ebb71d81d5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8067570291098056209, guid: e325050c19d82794d9e7c06fc89361ed, type: 3}
-  spawnPoint: {x: 0, y: 0.4}
-  cooldown: 0.2
+  _inputRememberTime: 0.15
+  _shootKey: 323
+  _shootPrefab: {fileID: 8067570291098056209, guid: e325050c19d82794d9e7c06fc89361ed, type: 3}
+  _shootSpawnOffset: {x: 0, y: 0.25}
+  _shootCooldown: 0.15
 --- !u!1 &1352419085
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +510,7 @@ GameObject:
   - component: {fileID: 1352419086}
   m_Layer: 3
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -616,7 +619,7 @@ GameObject:
   - component: {fileID: 1736842947}
   m_Layer: 3
   m_Name: Wall (1)
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
