@@ -27,10 +27,11 @@ public class Bullet : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Finish")) {
-            _isActive = false;
-            _rb.simulated = false;
-            _sr.enabled = false;
+        if (!collision.CompareTag("Player")) {
+            Deactivate();
+            StopAllCoroutines();
+
+            collision.GetComponent<CombatProperty>()?.TakeDamage(1);
         }
     }
 
@@ -41,15 +42,19 @@ public class Bullet : MonoBehaviour {
         transform.position = shootPos;
         _rb.velocity = direction.normalized * _shootVelocity;
 
-        StartCoroutine(Deactivate());
+        StartCoroutine(DeactivateDelay());
     }
 
-    private IEnumerator Deactivate() {
-        yield return _shootDeactivateWait;
-
+    private void Deactivate() {
         _isActive = false;
         _rb.simulated = false;
         _sr.enabled = false;
+    }
+
+    private IEnumerator DeactivateDelay() {
+        yield return _shootDeactivateWait;
+
+        Deactivate();
     }
 
 }
